@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using ICSharpCode.Decompiler.Metadata;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Projection;
+using SLaks.Ref12.Services;
 
 namespace SLaks.Ref12 {
 	public static class Extensions {
@@ -32,5 +34,23 @@ namespace SLaks.Ref12 {
 			var c = commandId.GetType().GUID;
 			ErrorHandler.ThrowOnFailure(target.Exec(ref c, Convert.ToUInt32(commandId, CultureInfo.InvariantCulture), execOptions, inHandle, outHandle));
 		}
+
+		public static IAssemblyResolver GetAssemblyResolver(this PEFile file, bool loadOnDemand = true)
+		{
+			return GetLoadedAssembly(file).GetAssemblyResolver(loadOnDemand);
+		}
+		public static LoadedAssembly GetLoadedAssembly(this PEFile file)
+		{
+			if (file == null)
+				throw new ArgumentNullException(nameof(file));
+			LoadedAssembly loadedAssembly;
+			lock (LoadedAssembly.loadedAssemblies)
+			{
+				if (!LoadedAssembly.loadedAssemblies.TryGetValue(file, out loadedAssembly))
+					throw new ArgumentException("The specified file is not associated with a LoadedAssembly!");
+			}
+			return loadedAssembly;
+		}
+
 	}
 }

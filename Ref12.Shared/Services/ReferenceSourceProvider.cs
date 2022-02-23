@@ -9,11 +9,14 @@ using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using ICSharpCode.Decompiler.Metadata;
 using Task = System.Threading.Tasks.Task;
 
 
 namespace SLaks.Ref12.Services {
-	public interface IReferenceSourceProvider {
+	public interface IReferenceSourceProvider 
+	{
+		bool Supports(TargetFramework targetFramework);
 		ISet<string> AvailableAssemblies { get; }
 		void Navigate(SymbolInfo symbol);
 	}
@@ -22,15 +25,40 @@ namespace SLaks.Ref12.Services {
 		[ImportingConstructor]
 		public RoslynReferenceSourceProvider(ILogger logger) : base(logger, "http://index", "https://sourceroslyn.io") {
 		}
+
+		public override bool Supports(TargetFramework targetFramework)
+		{
+			return true;
+		}
 	}
 	[Export(typeof(IReferenceSourceProvider))]
 	public class DotNetReferenceSourceProvider : ReferenceSourceProvider {
 		[ImportingConstructor]
 		public DotNetReferenceSourceProvider(ILogger logger) : base(logger, "http://index", "https://referencesource.microsoft.com") {
 		}
+		public override bool Supports(TargetFramework targetFramework)
+		{
+			return targetFramework.Identifier == TargetFrameworkIdentifier.NETFramework
+				|| targetFramework.Identifier == TargetFrameworkIdentifier.Silverlight;
+		}
 	}
 
-	public class ReferenceSourceProvider : IReferenceSourceProvider, IDisposable {
+	[Export(typeof(IReferenceSourceProvider))]
+	public class DotNetCoreReferenceSourceProvider : ReferenceSourceProvider
+	{
+		[ImportingConstructor]
+		public DotNetCoreReferenceSourceProvider(ILogger logger) : base(logger, "http://index", "https://source.dot.net")
+		{
+		}
+
+		public override bool Supports(TargetFramework targetFramework)
+		{
+			return targetFramework.Identifier != TargetFrameworkIdentifier.NETFramework
+				&& targetFramework.Identifier != TargetFrameworkIdentifier.Silverlight;
+		}
+	}
+
+	public abstract class ReferenceSourceProvider : IReferenceSourceProvider, IDisposable {
 		IEnumerable<string> urls;
 
 		readonly ILogger logger;
@@ -50,7 +78,7 @@ namespace SLaks.Ref12.Services {
 			};
 			NetworkChange.NetworkAddressChanged += async (s, e) => await LookupService();
 		}
-
+		public abstract bool Supports(TargetFramework targetFramework);
 
 		string baseUrl;
 

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SLaks-Ref12-086C4CE4-7061-4B1F-BC77-B64E4ED71B8E" Version="4.5.1" Language="en-US" Publisher="SLaks" />
-        <DisplayName>Ref12</DisplayName>
-        <Description xml:space="preserve">Forwards F12 to ReferenceSource.Microsoft.com instead of showing metadata.</Description>
-        <MoreInfo>https://github.com/SLaks/Ref12</MoreInfo>
-        <ReleaseNotes>https://github.com/SLaks/Ref12/releases</ReleaseNotes>
+        <Identity Id="3F01B722-AC80-4A56-9904-74ED82C64FB1" Version="4.6.0" Language="en-US" Publisher="Efrey Kong" />
+        <DisplayName>Ref12 NetCore Support</DisplayName>
+        <Description xml:space="preserve">Forwards F12 to source code instead of showing metadata.</Description>
+        <MoreInfo>https://github.com/efreykongcn/Ref12</MoreInfo>
+        <ReleaseNotes>https://github.com/efreykongcn/Ref12/releases</ReleaseNotes>
         <Icon>Resources\Ref12-200.png</Icon>
         <PreviewImage>Resources\Screenshot.png</PreviewImage>
         <Tags>C#, VB.Net, Reference Source, Source, Roslyn</Tags>

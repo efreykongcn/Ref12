@@ -64,6 +64,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ICSharpCode.Decompiler">
+      <Version>7.1.0.6543</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis">
       <Version>2.10.0</Version>
     </PackageReference>
@@ -81,11 +84,20 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Mono.Cecil">
+      <Version>0.11.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Ref12-200.png" />
-    <Content Include="Resources\Ref12-32.png" />
-    <Content Include="Resources\Screenshot.png" />
+    <Content Include="Resources\Ref12-200.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\Ref12-32.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\Screenshot.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <Import Project="..\Ref12.Shared\Ref12.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

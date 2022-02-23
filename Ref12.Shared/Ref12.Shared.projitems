@@ -16,9 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ref12Package.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoslynAssemblyRedirector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AssemblyFileFinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ILogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndexIdTranslator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ISymbolResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LoadedAssembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ReferenceSourceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RoslynSymbolResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\VsLogger.cs" />

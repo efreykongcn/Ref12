@@ -90,6 +90,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ICSharpCode.Decompiler">
+      <Version>7.1.0.6543</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis">
       <Version>2.10.0</Version>
     </PackageReference>
@@ -109,6 +112,9 @@
       <Version>17.1.4054</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Mono.Cecil">
+      <Version>0.11.4</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\Ref12.Shared\Ref12.Shared.projitems" Label="Shared" />

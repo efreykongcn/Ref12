@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
@@ -27,23 +28,26 @@ namespace SLaks.Ref12.Commands
 		static ISymbolResolver CreateRoslynResolver() { return new RoslynSymbolResolver(); }
 
 		protected override bool Execute(VSConstants.VSStd97CmdID commandId, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut) {
-			ISymbolResolver resolver = null;
-			SnapshotPoint? caretPoint = TextView.GetCaretPoint(s => resolvers.TryGetValue(s.ContentType.TypeName, out resolver));
-			if (caretPoint == null)
-				return false;
+			return ThreadHelper.JoinableTaskFactory.Run(async () =>
+			{
+				ISymbolResolver resolver = null;
+				SnapshotPoint? caretPoint = TextView.GetCaretPoint(s => resolvers.TryGetValue(s.ContentType.TypeName, out resolver));
+				if (caretPoint == null)
+					return false;
 
-			var symbol = resolver.GetSymbolAt(doc.FilePath, caretPoint.Value);
-			if (symbol == null || symbol.HasLocalSource)
-				return false;
+				var symbol = await resolver.GetSymbolAtAsync(doc.FilePath, caretPoint.Value);
+				if (symbol == null || symbol.HasLocalSource)
+					return false;
 
-			var target = references.FirstOrDefault(r => r.AvailableAssemblies.Contains(symbol.AssemblyName));
-			if (target == null)
-				return false;
+				var target = references.Where(r => r.Supports(symbol.TargetFramework)).FirstOrDefault(r => r.AvailableAssemblies.Contains(symbol.AssemblyName));
+				if (target == null)
+					return false;
 
-			Debug.WriteLine("Ref12: Navigating to IndexID " + symbol.IndexId);
+				Debug.WriteLine("Ref12: Navigating to IndexID " + symbol.IndexId);
 
-			target.Navigate(symbol);
-			return true;
+				target.Navigate(symbol);
+				return true;
+			});
 		}
 
 		protected override bool IsEnabled() {

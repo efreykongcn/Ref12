@@ -1,7 +1,7 @@
 # Road map
 
 - [x] Support VS2022
-- [ ] Support .NetCore project
+- [x] Support .NetCore project
 - [ ] Open source code in Visual Studio code editor
 
 
@@ -9,6 +9,9 @@
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 5.1.0
+-[x] Add .NetCore support. Ref12 extension is enabled in both .NetFramework and .NetCore project now.
 
 ## 5.0.0
 

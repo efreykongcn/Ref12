@@ -12,7 +12,7 @@ namespace SLaks.Ref12
 		public const string Name = "Ref12-VS2022";
 		public const string Description = @"Forwards F12 to source code instead of showing metadata.";
 		public const string Language = "en-US";
-		public const string Version = "5.0.0";
+		public const string Version = "5.1.0";
 		public const string Author = "Efrey Kong";
 		public const string Tags = "C#, Reference Source, Source, Roslyn";
 

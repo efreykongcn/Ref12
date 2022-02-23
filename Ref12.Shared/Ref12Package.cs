@@ -6,8 +6,9 @@ namespace SLaks.Ref12 {
 	// These GUIDS and command IDs must match the VSCT.
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	[Guid(Vsix.GuidExtensionPackageString)]
-	[PackageRegistration(UseManagedResourcesOnly = true)]
-	class Ref12Package : Package {
+	[InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version, IconResourceID = 400)]
+	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+	class Ref12Package : AsyncPackage {
 	}
 
 	[Guid(Vsix.GuidCommandIDString)]
