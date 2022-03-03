@@ -59,7 +59,7 @@ namespace SLaks.Ref12.Services {
 				assemblyPath = reference.Display;
 				using (var assemblyDef = AssemblyDefinition.ReadAssembly(assemblyPath))
 				{
-					targetFramework = AssemblyFileFinder.DetectTargetFramework(assemblyDef);
+					targetFramework = AssemblyFileFinder.DetectTargetFramework(assemblyDef, assemblyPath);
 					if (targetFramework.Identifier != TargetFrameworkIdentifier.NETFramework && targetFramework.Identifier != TargetFrameworkIdentifier.Silverlight)
 					{
 						var resolvedAssemblyFile = AssemblyFileFinder.FindAssemblyFile(assemblyDef, assemblyPath);

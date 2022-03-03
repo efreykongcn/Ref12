@@ -41,6 +41,9 @@ namespace SLaks.Ref12.Services
 
 		public static TargetFramework DetectTargetFramework(Mono.Cecil.AssemblyDefinition assembly, string assemblyPath = null)
 		{
+			if (assembly == null)
+				throw new ArgumentNullException(nameof(assembly));
+
 			var targetFrameworkId = DetectTargetFrameworkId(assembly, assemblyPath);
 			string[] tokens = targetFrameworkId.Split(',');
 			TargetFrameworkIdentifier identifier;
