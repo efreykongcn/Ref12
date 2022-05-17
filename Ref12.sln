@@ -19,11 +19,6 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ref12.Shared", "Ref12.Shared\Ref12.Shared.shproj", "{C4C6E37E-4FC4-4FDD-927F-41AA48675989}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Ref12.Shared\Ref12.Shared.projitems*{0e2eb598-a14c-4a30-806f-ceb328654f37}*SharedItemsImports = 4
-		Ref12.Shared\Ref12.Shared.projitems*{c4c6e37e-4fc4-4fdd-927f-41aa48675989}*SharedItemsImports = 13
-		Ref12.Shared\Ref12.Shared.projitems*{c4df9f84-d051-4624-b3f0-1a43df3ce829}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -40,7 +35,6 @@ Global
 		{0E2EB598-A14C-4A30-806F-CEB328654F37}.Release|x86.ActiveCfg = Release|Any CPU
 		{0E2EB598-A14C-4A30-806F-CEB328654F37}.Release|x86.Build.0 = Release|Any CPU
 		{A8DC1C83-EEB8-4675-BE33-E1ED1F0F3405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8DC1C83-EEB8-4675-BE33-E1ED1F0F3405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8DC1C83-EEB8-4675-BE33-E1ED1F0F3405}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{A8DC1C83-EEB8-4675-BE33-E1ED1F0F3405}.Debug|x86.Build.0 = Debug|Any CPU
 		{A8DC1C83-EEB8-4675-BE33-E1ED1F0F3405}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,5 +55,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {78207050-ABF6-48BD-BDC0-4398458A3350}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Ref12.Shared\Ref12.Shared.projitems*{0e2eb598-a14c-4a30-806f-ceb328654f37}*SharedItemsImports = 4
+		Ref12.Shared\Ref12.Shared.projitems*{c4c6e37e-4fc4-4fdd-927f-41aa48675989}*SharedItemsImports = 13
+		Ref12.Shared\Ref12.Shared.projitems*{c4df9f84-d051-4624-b3f0-1a43df3ce829}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

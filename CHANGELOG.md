@@ -10,6 +10,9 @@
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## 5.2.0
+-[x] Add enhanced decompilation metadata as source for .NETCore project in `Go To Deifinition - Native` command.
+
 ## 5.1.0
 -[x] Add .NetCore support. Ref12 extension is enabled in both .NetFramework and .NetCore project now.
 

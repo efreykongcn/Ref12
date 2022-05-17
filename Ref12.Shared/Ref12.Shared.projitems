@@ -6,13 +6,24 @@
     <SharedGUID>c4c6e37e-4fc4-4fdd-927f-41aa48675989</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Ref12.Shared</Import_RootNamespace>
+    <Import_RootNamespace>SLaks.Ref12</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandTargetBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\GoToDefinitionInterceptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\GoToDefintionNativeCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\TextViewListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\DecompilationMetadaAsSourceFileService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\IBidirectionalMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\IMetadataAsSourceFileService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\MetadataAsSourceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\MetadataAsSourceFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\MetadataAsSourceFileSupportService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\MetadataAsSourceHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetadataAsSource\MetadataAsSourceWorkspace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SymbolInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LoadedAssembly.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MetadataAsReferenceSourceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ref12Package.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoslynAssemblyRedirector.cs" />
@@ -20,9 +31,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ILogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IndexIdTranslator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ISymbolResolver.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\LoadedAssembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ReferenceSourceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RoslynSymbolResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\VsLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TargetFramework.cs" />
   </ItemGroup>
 </Project>

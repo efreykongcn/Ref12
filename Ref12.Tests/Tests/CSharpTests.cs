@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -36,6 +37,26 @@ namespace Ref12.Tests {
 
 			public void Reset() {
 				LastSymbol = null;
+			}
+
+			public bool Supports(TargetFramework targetFramework)
+			{
+				throw new System.NotImplementedException();
+			}
+
+			public bool CanNavigate(SymbolInfo symbol)
+			{
+				throw new System.NotImplementedException();
+			}
+
+			public void Navigate(SymbolInfo symbol)
+			{
+				throw new System.NotImplementedException();
+			}
+
+			public Task<bool> TryToNavigateAsync(SymbolInfo symbol, CancellationToken cancellationToken = default)
+			{
+				throw new System.NotImplementedException();
 			}
 		}
 

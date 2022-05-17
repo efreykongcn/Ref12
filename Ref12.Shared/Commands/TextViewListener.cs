@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using SLaks.Ref12.MetadataAsSource;
 using SLaks.Ref12.Services;
 
 namespace SLaks.Ref12.Commands {
@@ -27,6 +28,8 @@ namespace SLaks.Ref12.Commands {
 		public IVsEditorAdaptersFactoryService EditorAdaptersFactoryService { get; set; }
 		[Import]
 		public ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
+		[Import]
+		public IMetadataAsSourceFileService FileService { get; set; }
 
 		public async void SubjectBuffersConnected(IWpfTextView textView, ConnectionReason reason, Collection<ITextBuffer> subjectBuffers) {
 			if (!subjectBuffers.Any(b => b.ContentType.IsOfType("CSharp") || b.ContentType.IsOfType("Basic")))
@@ -44,8 +47,8 @@ namespace SLaks.Ref12.Commands {
 
 			// Register the native command first, so that it ends up earlier in
 			// the command chain than our interceptor. This prevents the native
-			// comand from being intercepted too.
-			textView.Properties.GetOrCreateSingletonProperty(() => new GoToDefintionNativeCommand(textViewAdapter, textView));
+			// comand from being intercepted too.			
+			textView.Properties.GetOrCreateSingletonProperty(() => new GoToDefintionNativeCommand(ServiceProvider, EditorAdaptersFactoryService, textViewAdapter, textView, document, FileService));
 			textView.Properties.GetOrCreateSingletonProperty(() => new GoToDefinitionInterceptor(ReferenceProviders, ServiceProvider, textViewAdapter, textView, document));
 		}
 		public void SubjectBuffersDisconnected(IWpfTextView textView, ConnectionReason reason, Collection<ITextBuffer> subjectBuffers) {
