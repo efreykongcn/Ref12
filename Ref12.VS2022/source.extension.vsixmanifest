@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CF4413C3-032A-46B4-B2B1-F1B2449B9CB8" Version="5.1.0" Language="en-US" Publisher="Efrey Kong" />
+        <Identity Id="CF4413C3-032A-46B4-B2B1-F1B2449B9CB8" Version="5.2.0" Language="en-US" Publisher="Efrey Kong" />
         <DisplayName>Ref12 VS2022</DisplayName>
         <Description xml:space="preserve">Forwards F12 to source code instead of showing metadata.</Description>
         <MoreInfo>https://github.com/efreykongcn/Ref12</MoreInfo>
