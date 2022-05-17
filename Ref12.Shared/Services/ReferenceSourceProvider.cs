@@ -9,6 +9,7 @@ using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using ICSharpCode.Decompiler.Metadata;
 using Task = System.Threading.Tasks.Task;
 
@@ -17,8 +18,9 @@ namespace SLaks.Ref12.Services {
 	public interface IReferenceSourceProvider 
 	{
 		bool Supports(TargetFramework targetFramework);
-		ISet<string> AvailableAssemblies { get; }
+		bool CanNavigate(SymbolInfo symbol);
 		void Navigate(SymbolInfo symbol);
+		Task<bool> TryToNavigateAsync(SymbolInfo symbol, CancellationToken cancellationToken = default);
 	}
 	[Export(typeof(IReferenceSourceProvider))]
 	public class RoslynReferenceSourceProvider : ReferenceSourceProvider {
@@ -60,7 +62,7 @@ namespace SLaks.Ref12.Services {
 
 	public abstract class ReferenceSourceProvider : IReferenceSourceProvider, IDisposable {
 		IEnumerable<string> urls;
-
+		ISet<string> availableAssemblies;
 		readonly ILogger logger;
 		readonly Timer timer;
 
@@ -68,13 +70,13 @@ namespace SLaks.Ref12.Services {
 			this.logger = logger;
 			this.urls = urls;
 			timer = new Timer(async _ => await LookupService(), null, 0, (int)TimeSpan.FromMinutes(60).TotalMilliseconds);
-			AvailableAssemblies = new HashSet<string>();
+			availableAssemblies = new HashSet<string>();
 
 			NetworkChange.NetworkAvailabilityChanged += (s, e) => {
 				if (e.IsAvailable)
 					LookupService().ToString();	// Fire and forget
 				else
-					AvailableAssemblies = new HashSet<string>();
+					availableAssemblies.Clear();
 			};
 			NetworkChange.NetworkAddressChanged += async (s, e) => await LookupService();
 		}
@@ -82,7 +84,7 @@ namespace SLaks.Ref12.Services {
 
 		string baseUrl;
 
-		public ISet<string> AvailableAssemblies { get; private set; }
+		
 
 		public async Task LookupService() {
 			Exception lastFailure = new Exception("No reference source URLs defined");
@@ -108,11 +110,11 @@ namespace SLaks.Ref12.Services {
 					);
 
 					// If nothing changed, don't spam the log
-					if (assemblies.SetEquals(this.AvailableAssemblies) && url == this.baseUrl)
+					if (assemblies.SetEquals(this.availableAssemblies) && url == this.baseUrl)
 						return;
-					AvailableAssemblies = assemblies;
+					availableAssemblies = assemblies;
 					baseUrl = url;
-					logger.Log("Using reference source from " + url + " with " + AvailableAssemblies.Count + " assemblies");
+					logger.Log("Using reference source from " + url + " with " + availableAssemblies.Count + " assemblies");
 					return;
 				} catch (Exception ex) {
 					lastFailure = ex;
@@ -120,13 +122,23 @@ namespace SLaks.Ref12.Services {
 				}
 			}
 			logger.Log("Errors occurred while trying all reference URLs; Ref12 will not work", lastFailure);
-			AvailableAssemblies = new HashSet<string>();
+			availableAssemblies = new HashSet<string>();
 		}
 
+		public virtual bool CanNavigate(SymbolInfo symbol)
+		{
+			return availableAssemblies.Contains(symbol.ImplementationAssemblyName);
+		}
 		public void Navigate(SymbolInfo symbol) {
-			var url = baseUrl + "/" + symbol.AssemblyName + "/a.html#" + GetHash(symbol.IndexId);
+			var url = baseUrl + "/" + symbol.ImplementationAssemblyName + "/a.html#" + GetHash(IndexIdTranslator.GetId(symbol.Symbol));
 
 			Process.Start(url);
+		}
+
+		public virtual Task<bool> TryToNavigateAsync(SymbolInfo symbol, CancellationToken cancellationToken = default)
+		{
+			Navigate(symbol);
+			return Task.FromResult(true);
 		}
 
 

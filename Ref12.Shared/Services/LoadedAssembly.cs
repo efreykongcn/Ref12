@@ -26,9 +26,11 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.Decompiler.Metadata;
+using ICSharpCode.Decompiler.TypeSystem;
+using ICSharpCode.Decompiler.TypeSystem.Implementation;
 using ICSharpCode.Decompiler.Util;
 
-namespace SLaks.Ref12.Services
+namespace SLaks.Ref12
 {
     [DebuggerDisplay("[LoadedAssembly {shortName}]")]
     public sealed class LoadedAssembly
@@ -165,6 +167,27 @@ namespace SLaks.Ref12.Services
 				System.Diagnostics.Trace.TraceError(ex.ToString());
 				return null;
 			}
+		}
+
+		ICompilation typeSystem;
+
+		/// <summary>
+		/// Gets a type system containing all types from this assembly + primitive types from mscorlib.
+		/// Returns null in case of load errors.
+		/// </summary>
+		/// <remarks>
+		/// This is an uncached type system.
+		/// </remarks>
+		public ICompilation GetTypeSystemOrNull()
+		{
+			return LazyInitializer.EnsureInitialized(ref this.typeSystem, () => {
+				var module = GetPEFileOrNull();
+				if (module == null)
+					return null;
+				return new SimpleCompilation(
+					module.WithOptions(TypeSystemOptions.Default | TypeSystemOptions.Uncached | TypeSystemOptions.KeepModifiers),
+					MinimalCorlib.Instance);
+			});
 		}
 
 		sealed class MyAssemblyResolver : IAssemblyResolver

@@ -35,15 +35,13 @@ namespace SLaks.Ref12.Commands
 				if (caretPoint == null)
 					return false;
 
-				var symbol = await resolver.GetSymbolAtAsync(doc.FilePath, caretPoint.Value);
+				var (symbol, targetFramework) = await resolver.GetSymbolInfoAtAsync(doc.FilePath, caretPoint.Value);
 				if (symbol == null || symbol.HasLocalSource)
 					return false;
 
-				var target = references.Where(r => r.Supports(symbol.TargetFramework)).FirstOrDefault(r => r.AvailableAssemblies.Contains(symbol.AssemblyName));
+				var target = references.Where(r => r.Supports(targetFramework)).FirstOrDefault(r => r.CanNavigate(symbol));
 				if (target == null)
 					return false;
-
-				Debug.WriteLine("Ref12: Navigating to IndexID " + symbol.IndexId);
 
 				target.Navigate(symbol);
 				return true;
